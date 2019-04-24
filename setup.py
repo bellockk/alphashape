@@ -12,7 +12,8 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = ['Click>=6.0',
-                'shapely>=1.4.0']
+                'shapely>=1.4.0',
+                'scipy>=1.0.0']
 
 setup_requirements = [ ]
 

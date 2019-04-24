@@ -8,5 +8,6 @@ coverage==4.5.1
 Sphinx==1.8.1
 twine==1.12.1
 shapely==1.6.4
+scipy==1.2.1
 
 
