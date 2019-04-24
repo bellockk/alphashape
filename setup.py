@@ -52,6 +52,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/bellockk/alphashape',
-    version='0.1.1',
+    version='version='0.1.1'',
     zip_safe=False,
 )
