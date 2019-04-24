@@ -2,7 +2,6 @@
 
 language: python
 python:
-#  - 3.7
   - 3.6
   - 3.5
   - 3.4
@@ -28,7 +27,7 @@ deploy:
   distributions: sdist bdist_wheel
   user: bellockk
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: OKGXTy8z2JErBLpjX864AbAZ947McwZoD7kzkC+l8cXviURo1HBsF02DjVxRdpW5kTTa/KF0PAvgilZeDhRPrvXj8ZUfMvyAvnu8PJ9FSSD0Q8mDjUoubMqCkO1N4yYNXFjbhLbyRd8yobkcwwMJwxOD5GtUnR68HzizW/2WDM6xxvPwuj47vMsdOJ096VotWAmNb7vOZ7syPfmPWa3AvKBygCb/zWlBSs4DOc6enScplTTKFYgNXbQ7KueUuT7gfnT+o3oFF1V3MpAogTtErbjqhQR/3WiOk+wBA8YbYUqyz95xUDP49TGfeDwVrO5O6Se2s5rDWpPTi08p30RrcpFtmDadDsR9OrdIRAi1cScfXrCSwXi2H9EvoMTkdhDDRWcyJzaWFb7vTHSXM+jxIq/EtgZidXEUmkhGNsM91KiiuphNPFKh1t8ZEOne/HGDwdsK1FaYyj0xSyfhHIICIbDvsxbAxXRBFla4wX3JIQMShZaUDh71fse2KV0apN5Un+WTtYsTgwfjHzh+ljhjg72tj4ruciH1uSHbV6qPX390ZIWbUulgmIjDEGhyTRPqZumQ9H9VbdFlhQv0msQR3OjvyD4zkilZOZaEilKYoDZApnEasqULdOnJqFkWbQjW//ft5tltX5vPkjjkoQPHENfftuGvlzyDZuzPHfG8248=
   on:
     tags: true
     repo: bellockk/alphashape
