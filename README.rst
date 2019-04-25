@@ -9,6 +9,9 @@ Alpha Shape Toolbox
 .. image:: https://img.shields.io/travis/bellockk/alphashape.svg
         :target: https://travis-ci.org/bellockk/alphashape
 
+.. image:: https://mybinder.org/badge_logo.svg
+        :target: https://mybinder.org/v2/gh/bellockk/alphashape/master
+
 .. image:: https://readthedocs.org/projects/alphashape/badge/?version=latest
         :target: https://alphashape.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
