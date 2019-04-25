@@ -7,6 +7,7 @@ from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
 
+
 def alphashape(points, alpha):
     """
     Compute the alpha shape (concave hull) of a set
