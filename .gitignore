@@ -103,7 +103,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-
-# Auto-Generated Documentation Files
-/docs/alphashape.rst
-/docs/modules.rst
