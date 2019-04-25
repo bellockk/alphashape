@@ -1,4 +1,7 @@
-# -*- coding: utf-8 -*-
+"""
+Tools for working with alpha shapes.
+"""
+__all__ = ['alphashape']
 
 import itertools
 import math
@@ -7,28 +10,23 @@ from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
 
-
 def alphashape(points, alpha):
     """
-    Compute the alpha shape (concave hull) of a set
-    of points.
-
-    @param points: Iterable container of points.
-
-    @param alpha: alpha value to influence the
-        gooeyness of the border. Smaller numbers
-        don't fall inward as much as larger numbers.
-        Too large, and you lose everything.
+    Compute the alpha shape (concave hull) of a set of points.  If the number of
+    points in the input is three or less, the convex hull is returned to the
+    user.  For two points, the convex hull collapses to a `LineString`; for one
+    point, a `Point`.
 
     Args:
 
-        `points` (``list``): an iterable container of points
+        points (list): an iterable container of points
 
-        `alpha` (``float``): alpha value
+        alpha (float): alpha value
 
     Returns:
 
-        ``Polygon``: the polygon of the concave hull
+        ``shapely.geometry.Polygon`` or ``shapely.geometry.LineString`` or
+        ``shapely.geometry.Point``: the resulting geometry
     """
     points = MultiPoint(list(points))
 

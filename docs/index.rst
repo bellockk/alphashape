@@ -1,5 +1,5 @@
 Welcome to Alpha Shape Toolbox's documentation!
-======================================
+===============================================
 
 .. toctree::
    :maxdepth: 2
@@ -15,6 +15,7 @@ Welcome to Alpha Shape Toolbox's documentation!
 
 Indices and tables
 ==================
+
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
