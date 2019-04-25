@@ -2,7 +2,7 @@
 
 __author__ = """Kenneth E. Bellock"""
 __email__ = 'ken@bellock.net'
-__version__ = '0.1.4'
 
 from .alphashape import alphashape
+from ._version import __version__
 __all__ = ['alphashape']
