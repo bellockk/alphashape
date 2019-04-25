@@ -10,10 +10,11 @@ from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
 
+
 def alphashape(points, alpha):
     """
-    Compute the alpha shape (concave hull) of a set of points.  If the number of
-    points in the input is three or less, the convex hull is returned to the
+    Compute the alpha shape (concave hull) of a set of points.  If the number
+    of points in the input is three or less, the convex hull is returned to the
     user.  For two points, the convex hull collapses to a `LineString`; for one
     point, a `Point`.
 

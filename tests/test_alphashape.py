@@ -41,7 +41,8 @@ class TestAlphashape(unittest.TestCase):
         print(alphashape)
         logging.info(alphashape)
         alphashape([(0., 1.), (0., 1.)], 0)
-        assert shapely.geometry.Point([0., 1.]) == alphashape([(0., 1.), (0., 1.)], 0)
+        assert shapely.geometry.Point([0., 1.]) == alphashape(
+            [(0., 1.), (0., 1.)], 0)
 
     def test_given_a_line_with_unique_points_return_a_line(self):
         """
