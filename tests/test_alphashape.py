@@ -7,6 +7,7 @@
 import unittest
 from click.testing import CliRunner
 
+import shapely
 from alphashape import alphashape
 from alphashape import cli
 
@@ -20,8 +21,50 @@ class TestAlphashape(unittest.TestCase):
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
-    def test_000_something(self):
-        """Test something."""
+    def test_given_a_point_return_a_point(self):
+        """
+        Given a point, the alphashape function should return the same point
+        """
+        assert shapely.geometry.Point([0., 0.]) == alphashape([(0., 0.)], 0)
+        assert shapely.geometry.Point([1., 0.]) == alphashape([(1., 0.)], 0)
+        assert shapely.geometry.Point([0., 1.]) == alphashape([(0., 1.)], 0)
+        assert shapely.geometry.Point([0., 0.]) == alphashape([(0., 0.)], 99)
+        assert shapely.geometry.Point([1., 0.]) == alphashape([(1., 0.)], 99)
+        assert shapely.geometry.Point([0., 1.]) == alphashape([(0., 1.)], 99)
+
+    def test_given_a_line_with_dupicate_points_return_a_point(self):
+        """
+        Given a line with duplicate points, the alphashape function should
+        return a point
+        """
+        assert shapely.geometry.Point([0., 1.]) == alphashape(
+            [(0., 1.), (0., 1.)], 0)
+
+    def test_given_a_line_with_unique_points_return_a_line(self):
+        """
+        Given a line with unique points, the alphashape function should return
+        the same line
+        """
+        assert shapely.geometry.LineString([(0., 0.), (0., 1.)]) == alphashape(
+            [(0., 0.), (0., 1.)], 0)
+        assert shapely.geometry.LineString([(1., 0.), (0., 1.)]) == alphashape(
+            [(1., 0.), (0., 1.)], 0)
+
+    def test_given_a_triangle_with_duplicate_points_returns_a_point(self):
+        """
+        Given a triangle with two unique points, the alphashape function should
+        return a point
+        """
+        assert shapely.geometry.Point((0., 1.)) == alphashape(
+            [(0., 1.), (0., 1.), (0., 1.)], 0)
+
+    def test_given_a_triangle_with_two_duplicate_points_returns_a_line(self):
+        """
+        Given a line with two unique points, the alphashape function should
+        return a line with the unique points
+        """
+        assert shapely.geometry.LineString([(1., 0.), (0., 1.)]) == alphashape(
+            [(1., 0.), (0., 1.), (0., 1.)], 0)
 
     def test_command_line_interface(self):
         """Test the CLI."""

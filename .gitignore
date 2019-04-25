@@ -51,6 +51,9 @@ coverage.xml
 *.mo
 *.pot
 
+# Local Virtualenv
+/local
+
 # Django stuff:
 *.log
 local_settings.py
