@@ -9,7 +9,7 @@ Alpha Shape Toolbox
 .. image:: https://img.shields.io/travis/bellockk/alphashape.svg
         :target: https://travis-ci.org/bellockk/alphashape
 
-.. image:: https://codecov.io/gh/codecov/example-python/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/bellockk/alphashape/branch/master/graph/badge.svg
         :target: https://codecov.io/gh/bellockk/alphashape
 
 .. image:: https://mybinder.org/badge_logo.svg
