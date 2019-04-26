@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.7 (2019-04-26)
+------------------
+
+* Complete code coverage of existing capabilities.
+
 0.1.6 (2019-04-24)
 ------------------
 
