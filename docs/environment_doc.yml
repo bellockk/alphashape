@@ -4,3 +4,4 @@ dependencies:
   - python=3.7
   - shapely
   - sphinx
+  - m2r
