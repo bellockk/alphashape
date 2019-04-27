@@ -6,3 +6,4 @@ dependencies:
   - sphinx
   - m2r
   - sphinx-issues
+  - sphinx-gallery
