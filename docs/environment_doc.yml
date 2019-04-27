@@ -8,3 +8,5 @@ dependencies:
   - sphinx-issues
   - sphinx-gallery
   - scipy
+  - descartes
+  - geopandas
