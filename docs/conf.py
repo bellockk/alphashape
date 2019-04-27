@@ -36,9 +36,14 @@ from _version import __version__
 extensions = [
     'm2r',
     'sphinx.ext.autodoc',
+    'sphinx_issues',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
+    'sphinx_gallery.gen_gallery',
     'sphinx.ext.imgconverter']
+
+# Github repository
+issues_github_path = 'bellockk/alphashape'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -168,3 +173,10 @@ texinfo_documents = [
 
 # -- Options for Mocking -----------------------------------------------
 autodoc_mock_imports = ['shapely', 'scipy', 'numpy']
+
+# -- Options for Gallery -----------------------------------------------
+sphinx_gallery_conf = {
+    'line_numbers': True,
+    'examples_dirs': '../examples',
+    'backreferences_dir': 'gen_modules/backreferences',
+    'gallery_dirs': 'auto_examples'}

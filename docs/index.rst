@@ -8,6 +8,7 @@ Welcome to Alpha Shape Toolbox's documentation!
    readme
    installation
    usage
+   gallery
    modules
    contributing
    authors
