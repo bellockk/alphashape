@@ -5,3 +5,4 @@ dependencies:
   - shapely
   - sphinx
   - m2r
+  - sphinx-issues
