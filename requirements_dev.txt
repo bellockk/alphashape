@@ -10,5 +10,5 @@ Sphinx==1.8.1
 twine==1.12.1
 shapely==1.6.4
 scipy==1.2.1
-
+m2r==0.2.1
 
