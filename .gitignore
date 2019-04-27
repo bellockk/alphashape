@@ -103,3 +103,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Documentation Temp folders
+/docs/auto_examples
+/docs/gen_modules
