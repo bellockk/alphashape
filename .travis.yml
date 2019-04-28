@@ -9,8 +9,13 @@ python:
 
 os:
   - linux
-#  - windows
-#  - osx
+  - windows
+  - osx
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo "OSX"; fi 
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo "Linux"; fi 
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then echo "Windows"; fi 
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -U tox-travis
