@@ -1,15 +1,18 @@
 # Config file for automatic testing at travis-ci.org
-
-os:
-  - linux
-  - windows
-  - osx
+language: minimal
+#os:
+#- linux
+#- windows
+#- osx
 
 matrix:
   include:
     - env: ENV_FILE=".ci/travis/37-windows.yml"
+      os: windows
     - env: ENV_FILE=".ci/travis/37-osx.yml"
+      os: osx
     - env: ENV_FILE=".ci/travis/37-linux.yml"
+      os: linux
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo "OSX"; fi 
