@@ -1,5 +1,14 @@
 __all__ = ['alphasolve']
 from .alphashape import alphashape
+import shapely
+
+
+def _testalpha(points, alpha):
+    """
+    Test
+    """
+    polygon = alphashape(points, alpha)
+    # if not isinstance(polygon,
 
 
 def alphasolve(points):
@@ -18,4 +27,5 @@ def alphasolve(points):
         float or None: The optimized alpha parameter or None to indicate a solution could not be found.
 
     """
-    pass
+    # First Check the limits
+
