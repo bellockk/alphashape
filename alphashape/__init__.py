@@ -4,6 +4,6 @@ __author__ = """Kenneth E. Bellock"""
 __email__ = 'ken@bellock.net'
 
 from .alphashape import alphashape
-from .alphasolve import alphasolve
+from .optimizealpha import optimizealpha
 from ._version import __version__  # noqa: F401
-__all__ = ['alphashape', 'alphasolve']
+__all__ = ['alphashape', 'optimizealpha']
