@@ -1,10 +1,9 @@
 channels:
   - conda-forge
 dependencies:
-  - python=3.6
+  - python=3.7
   - sphinx
   - m2r
   - sphinx-issues
   - sphinx-gallery
   - scipy
-  - geopandas
