@@ -7,3 +7,4 @@ dependencies:
   - sphinx-issues
   - sphinx-gallery
   - scipy
+  - cartopy
