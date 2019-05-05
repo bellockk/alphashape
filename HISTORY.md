@@ -1,16 +1,20 @@
 # History
 
+## 0.1.8 (2019-05-05)
+
+* :issue:`8` Include capability to optimize alpha parameter
+
 ## 0.1.7 (2019-04-26)
 
 * Complete code coverage of existing capabilities.
 
 ## 0.1.6 (2019-04-24)
 
-* Documentation cleanup.
+* :issue:`6` Include Jupyter Notebook in Examples
 
 ## 0.1.5 (2019-04-24)
 
-* Documentation cleanup.
+* :issue:`5` Create an Example Gallery in the Documentation
 
 ## 0.1.4 (2019-04-24)
 
