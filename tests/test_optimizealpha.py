@@ -5,9 +5,7 @@
 
 
 import unittest
-import logging
 
-import shapely
 from alphashape import optimizealpha
 
 

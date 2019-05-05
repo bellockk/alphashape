@@ -4,19 +4,36 @@ import logging
 import shapely
 from shapely.geometry import MultiPoint
 import numpy
-import alphashape
+try:
+    import geopandas
+    USE_GP = True
+except ImportError:
+    USE_GP = False
 
 
-def _testalpha(alpha, points):
+def _testalpha(points, alpha):
     """
-    Test
+    Evaluates an alpha parameter.
+
+    This helper function creates an alpha shape with the given points and alpha
+    parameter.  It then checks that the produced shape is a Polygon and that it
+    intersects all the input points.
+
+    Args:
+        points (``shapely.geometry.Multipoint``): data points
+        alpha (float): alpha value
+
+    Returns:
+        bool: True if the resulting alpha shape is a single polygon that
+            intersects all the input data points.
     """
-    polygon = alphashape.alphashape(points, alpha)
+    from .alphashape import alphashape
+    polygon = alphashape(points, alpha)
     if isinstance(polygon, shapely.geometry.polygon.Polygon) and all(
             [polygon.intersects(point) for point in points]):
-        return polygon.area
+        return True
     else:
-        return float('inf')
+        return False
 
 
 def optimizealpha(points, max_iterations=10000):
@@ -41,24 +58,35 @@ def optimizealpha(points, max_iterations=10000):
         float: The optimized alpha parameter
 
     """
+    # Convert to a shapely multipoint object if not one already
+    if USE_GP and isinstance(points, geopandas.GeoDataFrame):
+        points = points['geometry']
     if not isinstance(points, MultiPoint):
         points = MultiPoint(list(points))
+
     # Set the bounds
     lower = 0.
 
     # Ensure the upper limit bounds the solution
     upper = sys.float_info.max
-    if _testalpha(upper, points) != float('inf'):
+    if _testalpha(points, upper):
         logging.error('the max float value does not bound the alpha '
                       'parameter solution')
         return 0.
+
+    # Begin the bisection loop
     counter = 0
     while (upper - lower) > numpy.finfo(float).eps * 2:
+        # Bisect the current bounds
         test_alpha = (upper + lower) * .5
-        if _testalpha(test_alpha, points) == float('inf'):
-            upper = test_alpha
-        else:
+
+        # Update the bounds to include the solution space
+        if _testalpha(points, test_alpha):
             lower = test_alpha
+        else:
+            upper = test_alpha
+
+        # Handle exceeding maximum allowed number of iterations
         counter += 1
         if counter > max_iterations:
             logging.warning('maximum allowed iterations reached while '

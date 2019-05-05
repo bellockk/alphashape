@@ -9,7 +9,11 @@ from shapely.ops import cascaded_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
-import alphashape
+try:
+    import geopandas
+    USE_GP = True
+except ImportError:
+    USE_GP = False
 
 
 def alphashape(points, alpha=None):
@@ -21,15 +25,24 @@ def alphashape(points, alpha=None):
 
     Args:
 
-        points (list): an iterable container of points
+        points (list or ``shapely.geometry.MultiPoint`` or
+            ``geopandas.GeoDataFrame``): an iterable container of points
 
         alpha (float): alpha value
 
     Returns:
 
         ``shapely.geometry.Polygon`` or ``shapely.geometry.LineString`` or
-        ``shapely.geometry.Point``: the resulting geometry
+        ``shapely.geometry.Point`` or ``geopandas.GeoDataFrame``:
+            the resulting geometry
     """
+    # If given a geodataframe, extract the geometry
+    if USE_GP and isinstance(points, geopandas.GeoDataFrame):
+        crs = points.crs
+        points = points['geometry']
+    else:
+        crs = None
+
     if not isinstance(points, MultiPoint):
         points = MultiPoint(list(points))
 
@@ -40,7 +53,8 @@ def alphashape(points, alpha=None):
 
     # Determine alpha parameter if one is not given
     if alpha is None:
-        alpha = alphashape.optimizealpha(points)
+        from .optimizealpha import optimizealpha
+        alpha = optimizealpha(points)
 
     coords = np.array([point.coords[0] for point in points])
     tri = Delaunay(coords)
@@ -65,13 +79,22 @@ def alphashape(points, alpha=None):
         area = math.sqrt(s * (s - a) * (s - b) * (s - c))
 
         # Radius Filter
-        print(alpha)
         if area > 0 and a * b * c / (4.0 * area) < 1.0 / alpha:
             for i, j in itertools.combinations([ia, ib, ic], r=2):
                 if (i, j) not in edges and (j, i) not in edges:
                     edges.add((i, j))
                     edge_points.append(coords[[i, j]])
 
+    # Create the resulting polygon from the edge points
     m = MultiLineString(edge_points)
     triangles = list(polygonize(m))
-    return cascaded_union(triangles)
+    result = cascaded_union(triangles)
+
+    # Convert to pandas geodataframe object if that is what was an input
+    if crs:
+        gdf = geopandas.GeoDataFrame(geopandas.GeoSeries(result)).rename(
+            columns={0: 'geometry'}).set_geometry('geometry')
+        gdf.crs = crs
+        return gdf
+    else:
+        return result

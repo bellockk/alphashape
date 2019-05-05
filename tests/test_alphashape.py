@@ -79,6 +79,14 @@ class TestAlphashape(unittest.TestCase):
             (0., 0.), (0., 1.), (1., 1.), (1., 0.), (0., 0.)]).equals(
                 alphashape([(0., 0.), (0., 1.), (1., 1.), (1., 0.)], 1.e-9))
 
+    def test_given_a_four_point_polygon_with_no_alpha_return_input(self):
+        """
+        Given a polygon with four points, return the input as a polygon.
+        """
+        assert shapely.geometry.Polygon([
+            (0., 0.), (0., 1.), (1., 1.), (1., 0.), (0., 0.)]).equals(
+                alphashape([(0., 0.), (0., 1.), (1., 1.), (1., 0.)]))
+
     def test_command_line_interface(self):
         """Test the CLI."""
         runner = CliRunner()
