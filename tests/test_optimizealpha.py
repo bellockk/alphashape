@@ -27,5 +27,4 @@ class TestOptimizeAlapha(unittest.TestCase):
         alpha = optimizealpha(
             [(0., 0.), (0., 1.), (1., 1.), (1., 0.),
              (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)])
-        print(alpha)
-        assert alpha > 2. and alpha < 3.
+        assert alpha > 3. and alpha < 3.5

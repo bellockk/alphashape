@@ -9,9 +9,10 @@ from shapely.ops import cascaded_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
+from .optimizealpha import optimizealpha
 
 
-def alphashape(points, alpha):
+def alphashape(points, alpha=None):
     """
     Compute the alpha shape (concave hull) of a set of points.  If the number
     of points in the input is three or less, the convex hull is returned to the
@@ -29,12 +30,17 @@ def alphashape(points, alpha):
         ``shapely.geometry.Polygon`` or ``shapely.geometry.LineString`` or
         ``shapely.geometry.Point``: the resulting geometry
     """
-    points = MultiPoint(list(points))
+    if not isinstance(points, MultiPoint):
+        points = MultiPoint(list(points))
 
     # If given a triangle for input, or an alpha value of zero or less,
     # return the convex hull.
-    if len(points) < 4 or alpha <= 0:
+    if len(points) < 4 or (alpha and alpha <= 0):
         return points.convex_hull
+
+    # Determine alpha parameter if one is not given
+    if alpha is None:
+        alpha = optimizealpha(points)
 
     coords = np.array([point.coords[0] for point in points])
     tri = Delaunay(coords)

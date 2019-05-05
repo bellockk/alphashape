@@ -1,23 +1,25 @@
 __all__ = ['optimizealpha']
-from .alphashape import alphashape
+import sys
+import logging
 import shapely
-from scipy.optimize import minimize_scalar
+from shapely.geometry import MultiPoint
+import numpy
+import alphashape
 
 
 def _testalpha(alpha, points):
     """
     Test
     """
-    polygon = alphashape(points, alpha)
+    polygon = alphashape.alphashape(points, alpha)
     if isinstance(polygon, shapely.geometry.polygon.Polygon) and all(
-            [polygon.contains(shapely.geometry.Point(
-                *point)) for point in points]):
+            [polygon.intersects(point) for point in points]):
         return polygon.area
     else:
         return float('inf')
 
 
-def optimizealpha(points):
+def optimizealpha(points, max_iterations=10000):
     """
     Solve for the alpha parameter.
 
@@ -31,14 +33,35 @@ def optimizealpha(points):
     Args:
 
         points (list): an iterable container of points
+        max_iterations (int): maximum number of iterations while finding the
+            solution
 
     Returns:
 
         float: The optimized alpha parameter
 
     """
-    result = minimize_scalar(_testalpha, args=(points))
-    if result.success and result.x != float('inf'):
-        return result.x
-    else:
+    if not isinstance(points, MultiPoint):
+        points = MultiPoint(list(points))
+    # Set the bounds
+    lower = 0.
+
+    # Ensure the upper limit bounds the solution
+    upper = sys.float_info.max
+    if _testalpha(upper, points) != float('inf'):
+        logging.error('the max float value does not bound the alpha '
+                      'parameter solution')
         return 0.
+    counter = 0
+    while (upper - lower) > numpy.finfo(float).eps * 2:
+        test_alpha = (upper + lower) * .5
+        if _testalpha(test_alpha, points) == float('inf'):
+            upper = test_alpha
+        else:
+            lower = test_alpha
+        counter += 1
+        if counter > max_iterations:
+            logging.warning('maximum allowed iterations reached while '
+                            'optimizing the alpha parameter')
+            break
+    return lower
