@@ -1,6 +1,6 @@
 """
 Alpha Shapes with GeoPandas GeoDataFrame
-==============
+========================================
 
 This example opens a shapefile with GeoPandas, and generates a new GeoDataFrame
 with the alpha shape as its only geometry.  It then plots the geodataframe with
@@ -13,7 +13,11 @@ import cartopy.crs as ccrs
 import geopandas
 import alphashape
 
-DATA = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
+try:
+    DATA = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
+except NameError:
+    DATA = os.path.abspath(os.path.join(os.path.dirname(os.getcwd()),
+                                        'examples', 'data'))
 
 # Define input points
 gdf = geopandas.read_file(os.path.join(DATA, 'Public_Airports_March2018.shp'))

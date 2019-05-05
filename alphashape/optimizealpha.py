@@ -27,7 +27,10 @@ def _testalpha(points, alpha):
         bool: True if the resulting alpha shape is a single polygon that
             intersects all the input data points.
     """
-    from .alphashape import alphashape
+    try:
+        from alphashape import alphashape
+    except ImportError:
+        from .alphashape import alphashape
     polygon = alphashape(points, alpha)
     if isinstance(polygon, shapely.geometry.polygon.Polygon) and all(
             [polygon.intersects(point) for point in points]):

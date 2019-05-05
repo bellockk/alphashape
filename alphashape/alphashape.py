@@ -33,8 +33,8 @@ def alphashape(points, alpha=None):
     Returns:
 
         ``shapely.geometry.Polygon`` or ``shapely.geometry.LineString`` or
-        ``shapely.geometry.Point`` or ``geopandas.GeoDataFrame``:
-            the resulting geometry
+        ``shapely.geometry.Point`` or ``geopandas.GeoDataFrame``: the resulting
+            geometry
     """
     # If given a geodataframe, extract the geometry
     if USE_GP and isinstance(points, geopandas.GeoDataFrame):
@@ -53,7 +53,10 @@ def alphashape(points, alpha=None):
 
     # Determine alpha parameter if one is not given
     if alpha is None:
-        from .optimizealpha import optimizealpha
+        try:
+            from optimizealpha import optimizealpha
+        except ImportError:
+            from .optimizealpha import optimizealpha
         alpha = optimizealpha(points)
 
     coords = np.array([point.coords[0] for point in points])
