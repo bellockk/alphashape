@@ -1,5 +1,9 @@
 # History
 
+## 0.1.9 (2019-05-05)
+
+* [#7 Include GeoPandas Integration](https://github.com/bellockk/alphashape/issues/7)
+
 ## 0.1.8 (2019-05-05)
 
 * [#8 Include capability to optimize alpha parameter](https://github.com/bellockk/alphashape/issues/8)
