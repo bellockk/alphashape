@@ -10,3 +10,4 @@ dependencies:
   - scipy
   - descartes
   - geopandas
+  - cartopy
