@@ -8,3 +8,8 @@ Module contents
     :members:
     :undoc-members:
     :show-inheritance:
+
+.. automodule:: optimizealpha
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -9,7 +9,7 @@ from shapely.ops import cascaded_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
-from .optimizealpha import optimizealpha
+import alphashape
 
 
 def alphashape(points, alpha=None):
@@ -35,12 +35,12 @@ def alphashape(points, alpha=None):
 
     # If given a triangle for input, or an alpha value of zero or less,
     # return the convex hull.
-    if len(points) < 4 or (alpha and alpha <= 0):
+    if len(points) < 4 or (alpha is not None and alpha <= 0):
         return points.convex_hull
 
     # Determine alpha parameter if one is not given
     if alpha is None:
-        alpha = optimizealpha(points)
+        alpha = alphashape.optimizealpha(points)
 
     coords = np.array([point.coords[0] for point in points])
     tri = Delaunay(coords)
@@ -65,6 +65,7 @@ def alphashape(points, alpha=None):
         area = math.sqrt(s * (s - a) * (s - b) * (s - c))
 
         # Radius Filter
+        print(alpha)
         if area > 0 and a * b * c / (4.0 * area) < 1.0 / alpha:
             for i, j in itertools.combinations([ia, ib, ic], r=2):
                 if (i, j) not in edges and (j, i) not in edges:
