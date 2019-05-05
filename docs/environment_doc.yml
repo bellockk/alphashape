@@ -1,13 +1,11 @@
 channels:
   - conda-forge
 dependencies:
-  - python=3.7
-  - shapely
+  - python=3.6
   - sphinx
   - m2r
   - sphinx-issues
   - sphinx-gallery
   - scipy
-  - descartes
   - geopandas
   - cartopy
