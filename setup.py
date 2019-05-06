@@ -24,8 +24,10 @@ setup(
     author="Kenneth E. Bellock",
     author_email='ken@bellock.net',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Science/Research',
+        'Operating System :: OS Independent',
+        'Topic :: Scientific/Engineering',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
