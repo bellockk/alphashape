@@ -12,6 +12,7 @@ with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 requirements = ['Click>=6.0',
+                'click_log>=0.3.2',
                 'shapely>=1.4.0',
                 'scipy>=1.0.0']
 
