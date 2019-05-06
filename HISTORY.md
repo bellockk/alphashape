@@ -1,5 +1,9 @@
 # History
 
+## 0.1.10 (2019-05-05)
+
+* Correcting formatting on PyPi long description.
+
 ## 0.1.9 (2019-05-05)
 
 * [#7 Include GeoPandas Integration](https://github.com/bellockk/alphashape/issues/7)
