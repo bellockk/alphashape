@@ -49,7 +49,14 @@ def alphashape(points, alpha=None):
     # If given a triangle for input, or an alpha value of zero or less,
     # return the convex hull.
     if len(points) < 4 or (alpha is not None and alpha <= 0):
-        return points.convex_hull
+        result = points.convex_hull
+        if crs:
+            gdf = geopandas.GeoDataFrame(geopandas.GeoSeries(result)).rename(
+                columns={0: 'geometry'}).set_geometry('geometry')
+            gdf.crs = crs
+            return gdf
+        else:
+            return result
 
     # Determine alpha parameter if one is not given
     if alpha is None:
