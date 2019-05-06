@@ -30,7 +30,6 @@ Creating alpha shapes around sets of points usually requires a visually interact
 import sys
 from descartes import PolygonPatch
 import matplotlib.pyplot as plt
-sys.path.insert(0, r'C:\local\bellockk\alphashape')
 import alphashape
 ```
 
@@ -174,9 +173,9 @@ The data used in this notebook can be obtained from the Alaska Department of Tra
 
 
 ```python
+import os
 import geopandas
-SCRIPT_PATH = os.getcwd()
-data = os.path.join(SCRIPT_PATH, 'airports.shp')
+data = os.path.join(os.getcwd(), 'data', 'Public_Airports_March2018.shp')
 gdf = geopandas.read_file(data)
 ```
 
