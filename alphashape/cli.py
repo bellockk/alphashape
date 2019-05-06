@@ -5,7 +5,6 @@ import sys
 import click
 import click_log
 import logging
-import pandas
 import shapely
 import geopandas
 import alphashape
@@ -48,7 +47,7 @@ def main(source, target, alpha, epsg):
     LOGGER.info('Reading source shapefile: %s', source_filename)
     try:
         gdf = geopandas.read_file(source_filename)
-    except:
+    except:  # noqa: E722
         LOGGER.error('Could not read source shapefile')
         return 10
 
@@ -63,7 +62,7 @@ def main(source, target, alpha, epsg):
         LOGGER.info('Projecting source data to EPSG=%s', epsg)
         try:
             gdf_input = gdf.to_crs({'init': 'epsg:%s' % epsg})
-        except:
+        except:  # noqa: E722
             LOGGER.error('Could not project source shapefile')
             return 30
     else:
@@ -73,7 +72,7 @@ def main(source, target, alpha, epsg):
     LOGGER.info('Createing alpha shape')
     try:
         alpha_shape = alphashape.alphashape(gdf_input, alpha)
-    except:
+    except:  # noqa: E722
         LOGGER.error('Could not generate alpha shape')
         return 40
 
@@ -82,17 +81,17 @@ def main(source, target, alpha, epsg):
         LOGGER.info('Projecting alpha shape data to source projection')
         try:
             alpha_shape = alpha_shape.to_crs(gdf.crs)
-        except:
+        except:  # noqa: E722
             LOGGER.error('Could not project alpha shape')
             return 50
 
     # Write out the target shapefile
     LOGGER.info('Writing target shapefile: %s', target_filename)
-    # try:
-    alpha_shape.to_file(target)
-    # except:
-    #     LOGGER.error('Could not write target shapefile')
-    #     return 60
+    try:
+        alpha_shape.to_file(target)
+    except:  # noqa: E722
+        LOGGER.error('Could not write target shapefile')
+        return 60
     return 0
 
 
