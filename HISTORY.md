@@ -1,5 +1,10 @@
 # History
 
+## 1.0.0 (2019-05-06)
+
+* [#1 Update features in README.md](https://github.com/bellockk/alphashape/issues/1)
+* [#2 Create Application Utilizing the alphashape Toolbox](https://github.com/bellockk/alphashape/issues/2)
+
 ## 0.1.10 (2019-05-05)
 
 * Correcting formatting on PyPi long description.

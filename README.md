@@ -23,7 +23,7 @@ Creating alpha shapes around sets of points usually requires a visually interact
 
 ## Features
 
-## Import Dependencies
+### Import Dependencies
 
 
 ```python
@@ -34,7 +34,7 @@ sys.path.insert(0, r'C:\local\bellockk\alphashape')
 import alphashape
 ```
 
-## Define a set of points
+### Define a set of points
 
 
 ```python
@@ -42,7 +42,7 @@ points = [(0., 0.), (0., 1.), (1., 1.), (1., 0.),
           (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)]
 ```
 
-## Plotting the input points
+### Plotting the input points
 
 
 ```python
@@ -55,17 +55,17 @@ plt.show()
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_5_0.png)
 
 
-## Generate an Alpha Shape (Alpha=0.0) (Convex Hull)
+### Generate an Alpha Shape (Alpha=0.0) (Convex Hull)
 Every convex hull is an alpha shape, but not every alpha shape is a convex hull.  When the `alphashape` function is called with an alpha parameter of 0, a convex hull will always be returned.
 
-### Create the alpha shape
+#### Create the alpha shape
 
 
 ```python
 alpha_shape = alphashape.alphashape(points, 0.)
 ```
 
-### Plotting the alpha shape over the input data
+#### Plotting the alpha shape over the input data
 
 
 ```python
@@ -79,17 +79,17 @@ plt.show()
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_10_0.png)
 
 
-## Generate an Alpha Shape (Alpha=2.0) (Concave Hull)
+### Generate an Alpha Shape (Alpha=2.0) (Concave Hull)
 As we increase the alpha parameter value, the bounding shape will begin to fit the sample data with a more tightly fitting bounding box.
 
-### Create the alpha shape
+#### Create the alpha shape
 
 
 ```python
 alpha_shape = alphashape.alphashape(points, 2.0)
 ```
 
-### Plotting the alpha shape over the input data
+#### Plotting the alpha shape over the input data
 
 
 ```python
@@ -103,17 +103,17 @@ plt.show()
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_15_0.png)
 
 
-## Generate an Alpha Shape (Alpha=3.5)
+### Generate an Alpha Shape (Alpha=3.5)
 If you go too high on the alpha parameter, you will start to lose points from the original data set.
 
-### Create the alpha shape
+#### Create the alpha shape
 
 
 ```python
 alpha_shape = alphashape.alphashape(points, 3.5)
 ```
 
-### Plotting the alpha shape over the input data
+#### Plotting the alpha shape over the input data
 
 
 ```python
@@ -127,7 +127,7 @@ plt.show()
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_20_0.png)
 
 
-## Generate an Alpha Shape (Alpha=5.0)
+### Generate an Alpha Shape (Alpha=5.0)
 If you go too far, you will lose everything.
 
 
@@ -139,17 +139,17 @@ print(alpha_shape)
     GEOMETRYCOLLECTION EMPTY
     
 
-## Generate an Alpha Shape by Solving for an Optimal Alpha Value
+### Generate an Alpha Shape by Solving for an Optimal Alpha Value
 The alpha parameter can be solved for if it is not provided as an argument, but with large datasets this can take a long time to calculate.
 
-### Create the alpha shape
+#### Create the alpha shape
 
 
 ```python
 alpha_shape = alphashape.alphashape(points)
 ```
 
-### Plotting the alpha shape over the input data
+#### Plotting the alpha shape over the input data
 
 
 ```python
@@ -162,15 +162,15 @@ plt.show()
 
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_27_0.png)
 
-# Alpha Shapes with GeoPandas
+### Alpha Shapes with GeoPandas
 
-## Sample Data
+#### Sample Data
 
 The data used in this notebook can be obtained from the Alaska Department of Transportation and Public Facilities website at the link below.  It consists of a point collection for each of the public airports in Alaska.
 
 [http://www.dot.alaska.gov/stwdplng/mapping/shapefiles.shtml](http://www.dot.alaska.gov/stwdplng/mapping/shapefiles.shtml)
 
-## Load the Shapefile
+#### Load the Shapefile
 
 
 ```python
@@ -201,10 +201,10 @@ gdf.crs
 
 
 
-## Generate Alpha Shape
+#### Generate Alpha Shape
 The alpha shape will be generated in the coordinate frame the geodataframe is in.  In this example, we will project into an Albers Equal Area projection, construct our alpha shape in that coordinate system, and then convert back to the source projection.
 
-### Project to Albers Equal Area Spatial Reference
+#### Project to Albers Equal Area Spatial Reference
 
 
 ```python
@@ -216,7 +216,7 @@ gdf_proj.plot()
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_8_1.png)
 
 
-### Determine the Alpha Shape
+#### Determine the Alpha Shape
 
 
 ```python
@@ -228,7 +228,7 @@ alpha_shape.plot()
 ![png](https://raw.github.com/bellockk/alphashape/master/media/output_10_1.png)
 
 
-### Plotting the Alpha Shape over the Data Points
+#### Plotting the Alpha Shape over the Data Points
 #### Plate Carree Projection
 
 
