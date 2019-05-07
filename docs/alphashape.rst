@@ -4,12 +4,24 @@ alphashape package
 Module contents
 ---------------
 
-.. automodule:: alphashape
+.. automodule:: alphashape.alphashape
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: optimizealpha
+.. include:: gen_modules/backreferences/alphashape.alphashape.examples
+
+.. raw:: html
+
+       <div style='clear:both'></div>
+
+.. automodule:: alphashape.optimizealpha
     :members:
     :undoc-members:
     :show-inheritance:
+
+.. include:: gen_modules/backreferences/alphashape.optimizealpha.examples
+
+.. raw:: html
+
+       <div style='clear:both'></div>
