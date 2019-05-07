@@ -1,11 +1,13 @@
-channels:
-  - conda-forge
+# channels:
+#   - conda-forge
 dependencies:
-  - python=2.7
+  - python=3.7
   - sphinx
   - m2r
   - sphinx-issues
   - sphinx-gallery
   - scipy
-  - cartopy
   - geopandas
+  - pip
+  - pip:
+    - cartopy
