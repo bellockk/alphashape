@@ -3,11 +3,11 @@
 dependencies:
   - python=2.7
   - sphinx
-  - m2r
-  - sphinx-issues
-  - sphinx-gallery
   - scipy
   - geopandas
   - pip
   - pip:
     - cartopy
+    - m2r
+    - sphinx-issues
+    - sphinx-gallery
