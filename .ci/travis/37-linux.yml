@@ -8,6 +8,11 @@ dependencies:
   - proj4
   - cartopy
   - pip:
+    - tox
     - m2r
+    - flake8
+    - coverage
+    - codecov
+    - Sphinx
     - sphinx-issues
     - sphinx-gallery
