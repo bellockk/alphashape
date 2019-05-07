@@ -1,5 +1,10 @@
 # History
 
+## 1.0.1 (2019-05-06)
+
+* Added gallery plot for optimized alpha function.
+* Documentation cleanup.
+
 ## 1.0.0 (2019-05-06)
 
 * [#1 Update features in README.md](https://github.com/bellockk/alphashape/issues/1)
