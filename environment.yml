@@ -6,6 +6,8 @@ dependencies:
   - scipy
   - geopandas
   - pip
+  - geos
+  - proj4
   - pip:
     - cartopy
     - m2r
