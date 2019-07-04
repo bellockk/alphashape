@@ -6,6 +6,8 @@ To use the Alpha Shape Toolbox in a project::
 
     import alphashape
 
+Reference the examples gallery for further demonstration of using the Python API.
+
 To use the Alpha Shape Toolbox from the command line::
 
     Usage: alphashape [OPTIONS] SOURCE TARGET
