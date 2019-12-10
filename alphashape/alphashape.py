@@ -86,14 +86,19 @@ def alphashape(points, alpha=None):
         s = (a + b + c) * 0.5
 
         # Area of triangle by Heron's formula
-        area = math.sqrt(s * (s - a) * (s - b) * (s - c))
-
-        # Radius Filter
-        if area > 0 and a * b * c / (4.0 * area) < 1.0 / alpha:
-            for i, j in itertools.combinations([ia, ib, ic], r=2):
-                if (i, j) not in edges and (j, i) not in edges:
-                    edges.add((i, j))
-                    edge_points.append(coords[[i, j]])
+        # Precompute value inside square root to avoid unbound math error in case of 
+        # 0 area triangles. 
+        area = s * (s - a) * (s - b) * (s - c)
+        
+        if area > 0:
+            area = math.sqrt(area)
+            
+            # Radius Filter
+            if a * b * c / (4.0 * area) < 1.0 / alpha:
+                for i, j in itertools.combinations([ia, ib, ic], r=2):
+                    if (i, j) not in edges and (j, i) not in edges:
+                        edges.add((i, j))
+                        edge_points.append(coords[[i, j]])
 
     # Create the resulting polygon from the edge points
     m = MultiLineString(edge_points)
