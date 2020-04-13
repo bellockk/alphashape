@@ -39,7 +39,7 @@ def _testalpha(points, alpha):
         return False
 
 
-def optimizealpha(points, max_iterations=10000):
+def optimizealpha(points, max_iterations=10000, lower:float= 0., upper:float= sys.float_info.max,silent:bool= False):
     """
     Solve for the alpha parameter.
 
@@ -68,13 +68,13 @@ def optimizealpha(points, max_iterations=10000):
         points = MultiPoint(list(points))
 
     # Set the bounds
-    lower = 0.
-
+    assert lower >= 0, "The lower bounds must be at least 0"
     # Ensure the upper limit bounds the solution
-    upper = sys.float_info.max
+    assert upper <= sys.float_info.max, f"The upper bounds must be less than or equal to {sys.float_info.max} on your system"
+
     if _testalpha(points, upper):
-        logging.error('the max float value does not bound the alpha '
-                      'parameter solution')
+        if not silent:
+            logging.error('the max float value does not bound the alpha parameter solution')
         return 0.
 
     # Begin the bisection loop
@@ -92,7 +92,8 @@ def optimizealpha(points, max_iterations=10000):
         # Handle exceeding maximum allowed number of iterations
         counter += 1
         if counter > max_iterations:
-            logging.warning('maximum allowed iterations reached while '
-                            'optimizing the alpha parameter')
+            if not silent:
+                logging.warning('maximum allowed iterations reached while optimizing the alpha parameter')
+            lower = 0.
             break
     return lower
