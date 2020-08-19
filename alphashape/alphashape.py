@@ -25,16 +25,15 @@ def alphashape(points, alpha=None):
 
     Args:
 
-        points (list or ``shapely.geometry.MultiPoint`` or
-            ``geopandas.GeoDataFrame``): an iterable container of points
-
-        alpha (float): alpha value
+      points (list or ``shapely.geometry.MultiPoint`` or \
+          ``geopandas.GeoDataFrame``): an iterable container of points
+      alpha (float): alpha value
 
     Returns:
 
-        ``shapely.geometry.Polygon`` or ``shapely.geometry.LineString`` or
-        ``shapely.geometry.Point`` or ``geopandas.GeoDataFrame``: the resulting
-            geometry
+      ``shapely.geometry.Polygon`` or ``shapely.geometry.LineString`` or
+      ``shapely.geometry.Point`` or ``geopandas.GeoDataFrame``: \
+          the resulting geometry
     """
     # If given a geodataframe, extract the geometry
     if USE_GP and isinstance(points, geopandas.GeoDataFrame):
