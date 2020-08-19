@@ -7,7 +7,7 @@ dependencies:
   - geopandas=0.8.1
   - pip=20.2.2
   - geos=3.8.1
-  - proj4=6.11
+  - proj4=6.1.1
   - cartopy=0.18.0
   - pip:
     - m2r==0.2.1
