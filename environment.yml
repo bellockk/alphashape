@@ -1,15 +1,13 @@
-# channels:
-#   - conda-forge
 dependencies:
-  - python=3.7
-  - sphinx
-  - scipy
-  - geopandas
-  - pip
-  - geos
-  - proj4
-  - cartopy
+  - python=3.8
+  - sphinx=3.2.1
+  - scipy=1.5.2
+  - geopandas=0.8.1
+  - pip=20.2.2
+  - geos=3.8.1
+  - proj4=6.11
+  - cartopy=0.18.0
   - pip:
-    - m2r
-    - sphinx-issues
-    - sphinx-gallery
+    - m2r==0.2.1
+    - sphinx-issues==1.2.0
+    - sphinx-gallery==0.7.0

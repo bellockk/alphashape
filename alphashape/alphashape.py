@@ -86,13 +86,13 @@ def alphashape(points, alpha=None):
         s = (a + b + c) * 0.5
 
         # Area of triangle by Heron's formula
-        # Precompute value inside square root to avoid unbound math error in case of 
-        # 0 area triangles. 
+        # Precompute value inside square root to avoid unbound math error in
+        # case of 0 area triangles.
         area = s * (s - a) * (s - b) * (s - c)
-        
+
         if area > 0:
             area = math.sqrt(area)
-            
+
             # Radius Filter
             if a * b * c / (4.0 * area) < 1.0 / alpha:
                 for i, j in itertools.combinations([ia, ib, ic], r=2):

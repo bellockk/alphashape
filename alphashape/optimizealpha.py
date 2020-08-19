@@ -39,7 +39,8 @@ def _testalpha(points, alpha):
         return False
 
 
-def optimizealpha(points, max_iterations=10000, lower:float= 0., upper:float= sys.float_info.max,silent:bool= False):
+def optimizealpha(points, max_iterations: int = 10000, lower: float = 0.,
+                  upper: float = sys.float_info.max, silent: bool = False):
     """
     Solve for the alpha parameter.
 
@@ -55,6 +56,9 @@ def optimizealpha(points, max_iterations=10000, lower:float= 0., upper:float= sy
         points (list): an iterable container of points
         max_iterations (int): maximum number of iterations while finding the
             solution
+        lower (float): lower limit for optimization
+        upper (float): upper limit for optimization
+        silent (bool): silence warnings
 
     Returns:
 
@@ -70,11 +74,14 @@ def optimizealpha(points, max_iterations=10000, lower:float= 0., upper:float= sy
     # Set the bounds
     assert lower >= 0, "The lower bounds must be at least 0"
     # Ensure the upper limit bounds the solution
-    assert upper <= sys.float_info.max, f"The upper bounds must be less than or equal to {sys.float_info.max} on your system"
+    assert upper <= sys.float_info.max, (
+        f'The upper bounds must be less than or equal to {sys.float_info.max} '
+        'on your system')
 
     if _testalpha(points, upper):
         if not silent:
-            logging.error('the max float value does not bound the alpha parameter solution')
+            logging.error('the max float value does not bound the alpha '
+                          'parameter solution')
         return 0.
 
     # Begin the bisection loop
@@ -93,7 +100,8 @@ def optimizealpha(points, max_iterations=10000, lower:float= 0., upper:float= sy
         counter += 1
         if counter > max_iterations:
             if not silent:
-                logging.warning('maximum allowed iterations reached while optimizing the alpha parameter')
+                logging.warning('maximum allowed iterations reached while '
+                                'optimizing the alpha parameter')
             lower = 0.
             break
     return lower
