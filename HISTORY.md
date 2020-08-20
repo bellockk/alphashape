@@ -1,5 +1,10 @@
 # History
 
+## 1.1.0 (2020-08-19)
+
+* Updated dependency version numbers.
+* Including optional bounds for alpha paramter solver.
+
 ## 1.0.1 (2019-05-06)
 
 * Added gallery plot for optimized alpha function.
