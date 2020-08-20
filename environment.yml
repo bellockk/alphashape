@@ -3,6 +3,7 @@ dependencies:
   - sphinx=3.2.1
   - geopandas=0.8.1
   - cartopy=0.18.0
+  - descartes=1.1.0
   - pip=20.2.2
   - pip:
     - m2r2==0.2.5
