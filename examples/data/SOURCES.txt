@@ -1,7 +1,7 @@
 Sources:
   - Name: Alaska Public Airports
     Filename: Public_Airports_March2018.shp
-    Source: http://www.dot.alaska.gov/stwdplng/mapping/transdata/Public_Airports_March2018.zip
+    Source: http://dot.alaska.gov/stwddes/gis/transdata/Public_Airports_March2018.zip
     License: |
 The Transportation Geographic Information Section (TGIS) web pages are a
 public resource of general and specific information. The Alaska
