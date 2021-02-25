@@ -4,7 +4,6 @@
 
 * Updated dependencies for geopandas notebook examples.
 * Updated source information for Alaska Airports example data set.
-* Dropping support for Python 3.6.
 
 ## 1.1.0 (2020-08-19)
 
