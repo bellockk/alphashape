@@ -8,13 +8,11 @@
 [![Documentation Status](https://readthedocs.org/projects/alphashape/badge/?version=latest)](http://alphashape.readthedocs.io/?badge=latest)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-[![Anaconda install](https://anaconda.org/conda-forge/alphashape)](
-https://anaconda.org/conda-forge/alphashape/badges/installer/conda.svg)
-[![Anaconda version](https://anaconda.org/conda-forge/alphashape)](https://anaconda.org/conda-forge/alphashape/badges/version.svg)
-[![Anaconda downloads](https://anaconda.org/conda-forge/alphashape)](https://anaconda.org/conda-forge/alphashape/badges/downloads.svg)
-[![Anaconda platforms](https://anaconda.org/conda-forge/alphashape)](https://anaconda.org/conda-forge/alphashape/badges/platforms.svg)
-[![Anaconda lastupdated](https://anaconda.org/conda-forge/alphashape)](i
-https://anaconda.org/conda-forge/alphashape/badges/latest_release_date.svg)
+[![Anaconda install](https://anaconda.org/conda-forge/alphashape/badges/installer/conda.svg)](https://anaconda.org/conda-forge/alphashape)
+[![Anaconda version](https://anaconda.org/conda-forge/alphashape/badges/version.svg)](https://anaconda.org/conda-forge/alphashape)
+[![Anaconda downloads](https://anaconda.org/conda-forge/alphashape/badges/downloads.svg)](https://anaconda.org/conda-forge/alphashape)
+[![Anaconda platforms](https://anaconda.org/conda-forge/alphashape/badges/platforms.svg)](https://anaconda.org/conda-forge/alphashape)
+[![Anaconda lastupdated](https://anaconda.org/conda-forge/alphashape/badges/latest_release_date.svg)](https://anaconda.org/conda-forge/alphashape)
 
 Toolbox for generating alpha shapes.
 
