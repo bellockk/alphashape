@@ -14,6 +14,10 @@ with open('HISTORY.md') as history_file:
 requirements = ['Click>=6.0',
                 'click_log>=0.3.2',
                 'shapely>=1.4.0',
+                'geopandas>=0.8.2',
+                'matplotlib>=3.3.4',
+                'cartopy>=0.18.0',
+                'descartes>=1.1.0',
                 'scipy>=1.0.0']
 
 setup_requirements = [ ]
