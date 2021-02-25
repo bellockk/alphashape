@@ -4,7 +4,6 @@ language: python
 python:
   - 3.8
   - 3.7
-  - 3.6
 
 os:
   - linux
@@ -34,4 +33,4 @@ deploy:
   on:
     tags: true
     repo: bellockk/alphashape
-    python: 3.6
+    python: 3.7
