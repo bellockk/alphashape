@@ -10,5 +10,5 @@ Sphinx==3.2.1
 twine==3.2.0
 shapely==1.7.0
 scipy==1.5.2
-m2r==0.2.1
+m2r2==0.2.7
 geopandas==0.8.1

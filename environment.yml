@@ -1,5 +1,4 @@
 dependencies:
-  - python=3.8
   - sphinx=3.2.1
   - geopandas=0.8.1
   - cartopy=0.18.0

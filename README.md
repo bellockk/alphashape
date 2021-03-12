@@ -1,14 +1,16 @@
 # Alpha Shape Toolbox
 
-[![PyPI version](https://img.shields.io/pypi/v/alphashape.svg)](https://pypi.python.org/pypi/alphashape/)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/alphashape.svg)](https://pypi.python.org/pypi/alphashape/)
 [![Travis](https://api.travis-ci.org/bellockk/alphashape.svg?branch=master)](https://travis-ci.org/bellockk/alphashape/)
 [![CodeCov](https://codecov.io/gh/bellockk/alphashape/branch/master/graph/badge.svg)](https://codecov.io/gh/bellockk/alphashape)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bellockk/alphashape/master)
 [![Documentation Status](https://readthedocs.org/projects/alphashape/badge/?version=latest)](http://alphashape.readthedocs.io/?badge=latest)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-[![Anaconda install](https://anaconda.org/conda-forge/alphashape/badges/installer/conda.svg)](https://anaconda.org/conda-forge/alphashape)
+[![PyPI version](https://img.shields.io/pypi/v/alphashape.svg)](https://pypi.python.org/pypi/alphashape/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/alphashape.svg)](https://pypi.python.org/pypi/alphashape/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/alphashape)](https://pypi.python.org/pypi/alphashape/)
+
+
 [![Anaconda version](https://anaconda.org/conda-forge/alphashape/badges/version.svg)](https://anaconda.org/conda-forge/alphashape)
 [![Anaconda downloads](https://anaconda.org/conda-forge/alphashape/badges/downloads.svg)](https://anaconda.org/conda-forge/alphashape)
 [![Anaconda platforms](https://anaconda.org/conda-forge/alphashape/badges/platforms.svg)](https://anaconda.org/conda-forge/alphashape)
