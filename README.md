@@ -5,6 +5,8 @@
 [![CodeCov](https://codecov.io/gh/bellockk/alphashape/branch/master/graph/badge.svg)](https://codecov.io/gh/bellockk/alphashape)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bellockk/alphashape/master)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![DOI](https://zenodo.org/badge/183085167.svg)](https://zenodo.org/badge/latestdoi/183085167)
+
 
 [![PyPI version](https://img.shields.io/pypi/v/alphashape.svg)](https://pypi.python.org/pypi/alphashape/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/alphashape.svg)](https://pypi.python.org/pypi/alphashape/)
