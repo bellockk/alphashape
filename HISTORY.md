@@ -1,5 +1,9 @@
 # History
 
+## 1.2.1 (2021-03-13)
+
+* Adding in support for Python 3.6 and 3.9
+
 ## 1.2.0 (2021-02-25)
 
 * Updated dependencies for geopandas notebook examples.
