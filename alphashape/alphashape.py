@@ -15,6 +15,60 @@ try:
 except ImportError:
     USE_GP = False
 
+def circumcenter(points):
+    """
+    Calculate the circumcenter of a set of points in barycentric coordinates.
+
+    Args:
+      points: An `N`x`K` array of points which define an (`N`-1) simplex in K
+        dimensional space.  `N` and `K` must satisfy 1 <= `N` <= `K` and
+        `K` >= 1.
+
+    Returns:
+      The circumcenter of a set of points in barycentric coordinates.
+    """
+    points = np.asarray(points)
+    num_rows, num_columns = points.shape
+    A = np.bmat([[2 * np.dot(points, points.T),
+                  np.ones((num_rows, 1))],
+                 [np.ones((1, num_rows)), np.zeros((1,1))]])
+    b = np.hstack((np.sum(points * points, axis=1),
+                   np.ones((1))))
+    return np.linalg.solve(A, b)[:-1]
+
+def circumradius(points):
+    """
+    Calculte the circumradius of a given set of points.
+
+    Args:
+      points: An `N`x`K` array of points which define an (`N`-1) simplex in K
+        dimensional space.  `N` and `K` must satisfy 1 <= `N` <= `K` and
+        `K` >= 1.
+
+    Returns:
+      The circumradius of a given set of points.
+    """
+    points = np.asarray(points)
+    return np.linalg.norm(points[0,:] - np.dot(circumcenter(points), points))
+
+def alphasimplices(points):
+    """
+    Returns an iterator of simplices and their circumradii of the given set of
+    points.
+
+    Args:
+      points: An `N`x`M` array of points.
+
+    Yields:
+      A simplex, and its circumradius as a tuple.
+    """
+    coords = np.asarray(points)
+    tri = Delaunay(coords)
+
+    for simplex in tri.simplices:
+        simplex_points = coords[simplex]
+        yield simplex, circumradius(simplex_points)
+
 
 def alphashape(points, alpha=None):
     """
@@ -66,38 +120,18 @@ def alphashape(points, alpha=None):
         alpha = optimizealpha(points)
 
     coords = np.array([point.coords[0] for point in points])
-    tri = Delaunay(coords)
     edges = set()
     edge_points = []
 
-    # Loop over triangles
-    for ia, ib, ic in tri.vertices:
-        pa = coords[ia]
-        pb = coords[ib]
-        pc = coords[ic]
-
-        # Lengths of sides of triangle
-        a = math.sqrt((pa[0] - pb[0])**2 + (pa[1] - pb[1])**2)
-        b = math.sqrt((pb[0] - pc[0])**2 + (pb[1] - pc[1])**2)
-        c = math.sqrt((pc[0] - pa[0])**2 + (pc[1] - pa[1])**2)
-
-        # Semiperimeter of triangle
-        s = (a + b + c) * 0.5
-
-        # Area of triangle by Heron's formula
-        # Precompute value inside square root to avoid unbound math error in
-        # case of 0 area triangles.
-        area = s * (s - a) * (s - b) * (s - c)
-
-        if area > 0:
-            area = math.sqrt(area)
-
-            # Radius Filter
-            if a * b * c / (4.0 * area) < 1.0 / alpha:
-                for i, j in itertools.combinations([ia, ib, ic], r=2):
-                    if (i, j) not in edges and (j, i) not in edges:
-                        edges.add((i, j))
-                        edge_points.append(coords[[i, j]])
+    for point_indices, circumradius in alphasimplices(coords):
+        # Radius filter
+        if circumradius < 1.0 / alpha:
+            for edge in itertools.combinations(
+                    point_indices, r=coords.shape[-1]):
+                if all([e not in edges for e in itertools.combinations(
+                        edge, r=len(edge))]):
+                    edges.add(edge)
+                    edge_points.append(coords[np.array(edge)])
 
     # Create the resulting polygon from the edge points
     m = MultiLineString(edge_points)

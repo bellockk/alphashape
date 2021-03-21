@@ -5,7 +5,6 @@
 
 
 import unittest
-import logging
 from click.testing import CliRunner
 
 import shapely
@@ -38,8 +37,6 @@ class TestAlphashape(unittest.TestCase):
         Given a line with duplicate points, the alphashape function should
         return a point
         """
-        print(alphashape)
-        logging.info(alphashape)
         alphashape([(0., 1.), (0., 1.)], 0)
         assert shapely.geometry.Point([0., 1.]) == alphashape(
             [(0., 1.), (0., 1.)], 0)
