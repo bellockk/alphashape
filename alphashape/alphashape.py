@@ -121,20 +121,33 @@ def alphashape(points, alpha=None):
 
     coords = np.array([point.coords[0] for point in points])
     edges = set()
-    edge_points = []
+    perimeter_edges = set()
 
     for point_indices, circumradius in alphasimplices(coords):
         # Radius filter
+        if callable(alpha):
+            alpha = alpha(point_indices, circumradius)
         if circumradius < 1.0 / alpha:
             for edge in itertools.combinations(
                     point_indices, r=coords.shape[-1]):
                 if all([e not in edges for e in itertools.combinations(
                         edge, r=len(edge))]):
                     edges.add(edge)
-                    edge_points.append(coords[np.array(edge)])
+                    perimeter_edges.add(edge)
+                else:
+                    perimeter_edges -= set(itertools.combinations(edge,
+                        r=len(edge)))
+
+    if coords.shape[-1] > 3:
+        return perimeter_edges
+    elif coords.shape[-1] == 3:
+        import trimesh
+        result = trimesh.Trimesh(vertices=coords, faces=list(perimeter_edges))
+        trimesh.repair.fix_normals(result)
+        return result
 
     # Create the resulting polygon from the edge points
-    m = MultiLineString(edge_points)
+    m = MultiLineString([coords[np.array(edge)] for edge in perimeter_edges])
     triangles = list(polygonize(m))
     result = cascaded_union(triangles)
 
