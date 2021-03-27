@@ -96,12 +96,11 @@ def alphashape(points, alpha=None):
     else:
         crs = None
 
-    if not isinstance(points, MultiPoint):
-        points = MultiPoint(list(points))
-
     # If given a triangle for input, or an alpha value of zero or less,
     # return the convex hull.
     if len(points) < 4 or (alpha is not None and alpha <= 0):
+        if not isinstance(points, MultiPoint):
+            points = MultiPoint(list(points))
         result = points.convex_hull
         if crs:
             gdf = geopandas.GeoDataFrame(geopandas.GeoSeries(result)).rename(
@@ -119,7 +118,7 @@ def alphashape(points, alpha=None):
             from .optimizealpha import optimizealpha
         alpha = optimizealpha(points)
 
-    coords = np.array([point.coords[0] for point in points])
+    coords = np.array(points)
     edges = set()
     perimeter_edges = set()
 
