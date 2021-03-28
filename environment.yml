@@ -3,6 +3,8 @@ dependencies:
   - geopandas=0.8.1
   - cartopy=0.18.0
   - descartes=1.1.0
+  - trimesh=3.9.8
+  - networkx=2.5
   - pip=20.2.2
   - pip:
     - m2r2==0.2.5
