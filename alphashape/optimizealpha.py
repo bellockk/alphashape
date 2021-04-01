@@ -3,6 +3,8 @@ import sys
 import logging
 import shapely
 from shapely.geometry import MultiPoint
+import trimesh
+import rtree
 import numpy
 try:
     import geopandas
@@ -32,9 +34,18 @@ def _testalpha(points, alpha):
     except ImportError:
         from .alphashape import alphashape
     polygon = alphashape(points, alpha)
-    if isinstance(polygon, shapely.geometry.polygon.Polygon) and all(
-            [polygon.intersects(point) for point in points]):
-        return True
+    if isinstance(polygon, shapely.geometry.polygon.Polygon):
+        if not isinstance(points, MultiPoint):
+            points = MultiPoint(list(points))
+        return all([polygon.intersects(point) for point in points])
+    elif isinstance(polygon, trimesh.base.Trimesh):
+        if len(polygon.faces) > 0:
+            print(alpha)
+            print(polygon.faces)
+            print(trimesh.proximity.signed_distance(polygon, list(points)) < 0)
+            print(all(trimesh.proximity.signed_distance(polygon, list(points)) < 0))
+        return len(polygon.faces) > 0 and all(trimesh.proximity.signed_distance(
+            polygon, list(points)) < 0)
     else:
         return False
 
@@ -68,8 +79,6 @@ def optimizealpha(points, max_iterations: int = 10000, lower: float = 0.,
     # Convert to a shapely multipoint object if not one already
     if USE_GP and isinstance(points, geopandas.GeoDataFrame):
         points = points['geometry']
-    if not isinstance(points, MultiPoint):
-        points = MultiPoint(list(points))
 
     # Set the bounds
     assert lower >= 0, "The lower bounds must be at least 0"
