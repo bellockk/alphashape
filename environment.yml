@@ -1,3 +1,6 @@
+channels:
+  - defaults
+  - conda-forge
 dependencies:
   - sphinx=3.2.1
   - geopandas=0.8.1
