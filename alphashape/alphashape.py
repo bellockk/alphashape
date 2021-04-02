@@ -4,18 +4,21 @@ Tools for working with alpha shapes.
 __all__ = ['alphashape']
 
 import itertools
-import math
+import logging
 from shapely.ops import unary_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
+from typing import Union
+
 try:
     import geopandas
     USE_GP = True
 except ImportError:
     USE_GP = False
 
-def circumcenter(points):
+
+def circumcenter(points: Union[list[tuple[float]], np.ndarray]) -> np.ndarray:
     """
     Calculate the circumcenter of a set of points in barycentric coordinates.
 
@@ -31,12 +34,13 @@ def circumcenter(points):
     num_rows, num_columns = points.shape
     A = np.bmat([[2 * np.dot(points, points.T),
                   np.ones((num_rows, 1))],
-                 [np.ones((1, num_rows)), np.zeros((1,1))]])
+                 [np.ones((1, num_rows)), np.zeros((1, 1))]])
     b = np.hstack((np.sum(points * points, axis=1),
                    np.ones((1))))
     return np.linalg.solve(A, b)[:-1]
 
-def circumradius(points):
+
+def circumradius(points: Union[list[tuple[float]], np.ndarray]) -> float:
     """
     Calculte the circumradius of a given set of points.
 
@@ -49,9 +53,11 @@ def circumradius(points):
       The circumradius of a given set of points.
     """
     points = np.asarray(points)
-    return np.linalg.norm(points[0,:] - np.dot(circumcenter(points), points))
+    return np.linalg.norm(points[0, :] - np.dot(circumcenter(points), points))
 
-def alphasimplices(points):
+
+def alphasimplices(points: Union[list[tuple[float]], np.ndarray]) -> \
+        Union[list[tuple[float]], np.ndarray]:
     """
     Returns an iterator of simplices and their circumradii of the given set of
     points.
@@ -70,11 +76,12 @@ def alphasimplices(points):
         try:
             yield simplex, circumradius(simplex_points)
         except np.linalg.LinAlgError:
-            logging.warn('Singular matrix.  Likely caused by all points '
+            logging.warn('Singular matrix. Likely caused by all points '
                          'lying in an N-1 space.')
 
 
-def alphashape(points, alpha=None):
+def alphashape(points: Union[list[tuple[float]], np.ndarray],
+               alpha: Union[None, float] = None):
     """
     Compute the alpha shape (concave hull) of a set of points.  If the number
     of points in the input is three or less, the convex hull is returned to the
@@ -133,7 +140,7 @@ def alphashape(points, alpha=None):
     # filtering
     edges = set()
 
-    # Create a set to hold unique edges of perimeter simplices.  
+    # Create a set to hold unique edges of perimeter simplices.
     # Whenever a simplex is found that passes the radius filter, its edges
     # will be inspected to see if they already exist in the `edges` set.  If an
     # edge does not already exist there, it will be added to both the `edges`
@@ -158,8 +165,8 @@ def alphashape(points, alpha=None):
                     edges.add(edge)
                     perimeter_edges.add(edge)
                 else:
-                    perimeter_edges -= set(itertools.combinations(edge,
-                        r=len(edge)))
+                    perimeter_edges -= set(itertools.combinations(
+                        edge, r=len(edge)))
 
     if coords.shape[-1] > 3:
         return perimeter_edges

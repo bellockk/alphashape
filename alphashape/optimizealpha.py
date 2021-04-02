@@ -4,8 +4,9 @@ import logging
 import shapely
 from shapely.geometry import MultiPoint
 import trimesh
-import rtree
-import numpy
+from typing import Union
+import rtree  # Needed by trimesh
+import numpy as np
 try:
     import geopandas
     USE_GP = True
@@ -13,7 +14,7 @@ except ImportError:
     USE_GP = False
 
 
-def _testalpha(points, alpha):
+def _testalpha(points: Union[list[tuple[float]], np.ndarray], alpha: float):
     """
     Evaluates an alpha parameter.
 
@@ -22,8 +23,8 @@ def _testalpha(points, alpha):
     intersects all the input points.
 
     Args:
-        points (``shapely.geometry.Multipoint``): data points
-        alpha (float): alpha value
+        points: data points
+        alpha: alpha value
 
     Returns:
         bool: True if the resulting alpha shape is a single polygon that
@@ -45,7 +46,8 @@ def _testalpha(points, alpha):
         return False
 
 
-def optimizealpha(points, max_iterations: int = 10000, lower: float = 0.,
+def optimizealpha(points: Union[list[tuple[float]], np.ndarray],
+                  max_iterations: int = 10000, lower: float = 0.,
                   upper: float = sys.float_info.max, silent: bool = False):
     """
     Solve for the alpha parameter.
@@ -59,12 +61,12 @@ def optimizealpha(points, max_iterations: int = 10000, lower: float = 0.,
 
     Args:
 
-        points (list): an iterable container of points
+        points: an iterable container of points
         max_iterations (int): maximum number of iterations while finding the
             solution
-        lower (float): lower limit for optimization
-        upper (float): upper limit for optimization
-        silent (bool): silence warnings
+        lower: lower limit for optimization
+        upper: upper limit for optimization
+        silent: silence warnings
 
     Returns:
 
@@ -90,7 +92,7 @@ def optimizealpha(points, max_iterations: int = 10000, lower: float = 0.,
 
     # Begin the bisection loop
     counter = 0
-    while (upper - lower) > numpy.finfo(float).eps * 2:
+    while (upper - lower) > np.finfo(float).eps * 2:
         # Bisect the current bounds
         test_alpha = (upper + lower) * .5
 
