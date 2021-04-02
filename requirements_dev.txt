@@ -12,3 +12,5 @@ shapely==1.7.0
 scipy==1.5.2
 m2r2==0.2.7
 geopandas==0.8.1
+trimesh==3.9.8
+networkx==2.5

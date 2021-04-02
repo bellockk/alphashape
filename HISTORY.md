@@ -1,5 +1,10 @@
 # History
 
+## 1.3.0 (2021-04-02)
+
+* Support for generating alphashapes for 3 or more dimensional input data.
+* GeoJSON support in command line interface.
+
 ## 1.2.1 (2021-03-13)
 
 * Adding in support for Python 3.6 and 3.9

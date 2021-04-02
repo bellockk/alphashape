@@ -5,7 +5,7 @@ __all__ = ['alphashape']
 
 import itertools
 import math
-from shapely.ops import cascaded_union, polygonize
+from shapely.ops import unary_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
@@ -14,6 +14,64 @@ try:
     USE_GP = True
 except ImportError:
     USE_GP = False
+
+def circumcenter(points):
+    """
+    Calculate the circumcenter of a set of points in barycentric coordinates.
+
+    Args:
+      points: An `N`x`K` array of points which define an (`N`-1) simplex in K
+        dimensional space.  `N` and `K` must satisfy 1 <= `N` <= `K` and
+        `K` >= 1.
+
+    Returns:
+      The circumcenter of a set of points in barycentric coordinates.
+    """
+    points = np.asarray(points)
+    num_rows, num_columns = points.shape
+    A = np.bmat([[2 * np.dot(points, points.T),
+                  np.ones((num_rows, 1))],
+                 [np.ones((1, num_rows)), np.zeros((1,1))]])
+    b = np.hstack((np.sum(points * points, axis=1),
+                   np.ones((1))))
+    return np.linalg.solve(A, b)[:-1]
+
+def circumradius(points):
+    """
+    Calculte the circumradius of a given set of points.
+
+    Args:
+      points: An `N`x`K` array of points which define an (`N`-1) simplex in K
+        dimensional space.  `N` and `K` must satisfy 1 <= `N` <= `K` and
+        `K` >= 1.
+
+    Returns:
+      The circumradius of a given set of points.
+    """
+    points = np.asarray(points)
+    return np.linalg.norm(points[0,:] - np.dot(circumcenter(points), points))
+
+def alphasimplices(points):
+    """
+    Returns an iterator of simplices and their circumradii of the given set of
+    points.
+
+    Args:
+      points: An `N`x`M` array of points.
+
+    Yields:
+      A simplex, and its circumradius as a tuple.
+    """
+    coords = np.asarray(points)
+    tri = Delaunay(coords)
+
+    for simplex in tri.simplices:
+        simplex_points = coords[simplex]
+        try:
+            yield simplex, circumradius(simplex_points)
+        except np.linalg.LinAlgError:
+            logging.warn('Singular matrix.  Likely caused by all points '
+                         'lying in an N-1 space.')
 
 
 def alphashape(points, alpha=None):
@@ -42,12 +100,12 @@ def alphashape(points, alpha=None):
     else:
         crs = None
 
-    if not isinstance(points, MultiPoint):
-        points = MultiPoint(list(points))
-
     # If given a triangle for input, or an alpha value of zero or less,
     # return the convex hull.
-    if len(points) < 4 or (alpha is not None and alpha <= 0):
+    if len(points) < 4 or (alpha is not None and not callable(
+            alpha) and alpha <= 0):
+        if not isinstance(points, MultiPoint):
+            points = MultiPoint(list(points))
         result = points.convex_hull
         if crs:
             gdf = geopandas.GeoDataFrame(geopandas.GeoSeries(result)).rename(
@@ -65,44 +123,56 @@ def alphashape(points, alpha=None):
             from .optimizealpha import optimizealpha
         alpha = optimizealpha(points)
 
-    coords = np.array([point.coords[0] for point in points])
-    tri = Delaunay(coords)
+    # Convert the points to a numpy array
+    if USE_GP:
+        coords = np.array([point.coords[0] for point in points])
+    else:
+        coords = np.array(points)
+
+    # Create a set to hold unique edges of simplices that pass the radius
+    # filtering
     edges = set()
-    edge_points = []
 
-    # Loop over triangles
-    for ia, ib, ic in tri.vertices:
-        pa = coords[ia]
-        pb = coords[ib]
-        pc = coords[ic]
+    # Create a set to hold unique edges of perimeter simplices.  
+    # Whenever a simplex is found that passes the radius filter, its edges
+    # will be inspected to see if they already exist in the `edges` set.  If an
+    # edge does not already exist there, it will be added to both the `edges`
+    # set and the `permimeter_edges` set.  If it does already exist there, it
+    # will be removed from the `perimeter_edges` set if found there.  This is
+    # taking advantage of the property of perimeter edges that each edge can
+    # only exist once.
+    perimeter_edges = set()
 
-        # Lengths of sides of triangle
-        a = math.sqrt((pa[0] - pb[0])**2 + (pa[1] - pb[1])**2)
-        b = math.sqrt((pb[0] - pc[0])**2 + (pb[1] - pc[1])**2)
-        c = math.sqrt((pc[0] - pa[0])**2 + (pc[1] - pa[1])**2)
+    for point_indices, circumradius in alphasimplices(coords):
+        if callable(alpha):
+            resolved_alpha = alpha(point_indices, circumradius)
+        else:
+            resolved_alpha = alpha
 
-        # Semiperimeter of triangle
-        s = (a + b + c) * 0.5
+        # Radius filter
+        if circumradius < 1.0 / resolved_alpha:
+            for edge in itertools.combinations(
+                    point_indices, r=coords.shape[-1]):
+                if all([e not in edges for e in itertools.combinations(
+                        edge, r=len(edge))]):
+                    edges.add(edge)
+                    perimeter_edges.add(edge)
+                else:
+                    perimeter_edges -= set(itertools.combinations(edge,
+                        r=len(edge)))
 
-        # Area of triangle by Heron's formula
-        # Precompute value inside square root to avoid unbound math error in
-        # case of 0 area triangles.
-        area = s * (s - a) * (s - b) * (s - c)
-
-        if area > 0:
-            area = math.sqrt(area)
-
-            # Radius Filter
-            if a * b * c / (4.0 * area) < 1.0 / alpha:
-                for i, j in itertools.combinations([ia, ib, ic], r=2):
-                    if (i, j) not in edges and (j, i) not in edges:
-                        edges.add((i, j))
-                        edge_points.append(coords[[i, j]])
+    if coords.shape[-1] > 3:
+        return perimeter_edges
+    elif coords.shape[-1] == 3:
+        import trimesh
+        result = trimesh.Trimesh(vertices=coords, faces=list(perimeter_edges))
+        trimesh.repair.fix_normals(result)
+        return result
 
     # Create the resulting polygon from the edge points
-    m = MultiLineString(edge_points)
+    m = MultiLineString([coords[np.array(edge)] for edge in perimeter_edges])
     triangles = list(polygonize(m))
-    result = cascaded_union(triangles)
+    result = unary_union(triangles)
 
     # Convert to pandas geodataframe object if that is what was an input
     if crs:
