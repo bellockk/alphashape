@@ -9,7 +9,7 @@ from shapely.ops import unary_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
 import numpy as np
-from typing import Union
+from typing import Union, Tuple, List
 
 try:
     import geopandas
@@ -18,7 +18,7 @@ except ImportError:
     USE_GP = False
 
 
-def circumcenter(points: Union[list[tuple[float]], np.ndarray]) -> np.ndarray:
+def circumcenter(points: Union[List[Tuple[float]], np.ndarray]) -> np.ndarray:
     """
     Calculate the circumcenter of a set of points in barycentric coordinates.
 
@@ -40,7 +40,7 @@ def circumcenter(points: Union[list[tuple[float]], np.ndarray]) -> np.ndarray:
     return np.linalg.solve(A, b)[:-1]
 
 
-def circumradius(points: Union[list[tuple[float]], np.ndarray]) -> float:
+def circumradius(points: Union[List[Tuple[float]], np.ndarray]) -> float:
     """
     Calculte the circumradius of a given set of points.
 
@@ -56,8 +56,8 @@ def circumradius(points: Union[list[tuple[float]], np.ndarray]) -> float:
     return np.linalg.norm(points[0, :] - np.dot(circumcenter(points), points))
 
 
-def alphasimplices(points: Union[list[tuple[float]], np.ndarray]) -> \
-        Union[list[tuple[float]], np.ndarray]:
+def alphasimplices(points: Union[List[Tuple[float]], np.ndarray]) -> \
+        Union[List[Tuple[float]], np.ndarray]:
     """
     Returns an iterator of simplices and their circumradii of the given set of
     points.
@@ -80,7 +80,7 @@ def alphasimplices(points: Union[list[tuple[float]], np.ndarray]) -> \
                          'lying in an N-1 space.')
 
 
-def alphashape(points: Union[list[tuple[float]], np.ndarray],
+def alphashape(points: Union[List[Tuple[float]], np.ndarray],
                alpha: Union[None, float] = None):
     """
     Compute the alpha shape (concave hull) of a set of points.  If the number

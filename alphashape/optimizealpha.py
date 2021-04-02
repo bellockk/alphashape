@@ -4,7 +4,7 @@ import logging
 import shapely
 from shapely.geometry import MultiPoint
 import trimesh
-from typing import Union
+from typing import Union, Tuple, List
 import rtree  # Needed by trimesh
 import numpy as np
 try:
@@ -14,7 +14,7 @@ except ImportError:
     USE_GP = False
 
 
-def _testalpha(points: Union[list[tuple[float]], np.ndarray], alpha: float):
+def _testalpha(points: Union[List[Tuple[float]], np.ndarray], alpha: float):
     """
     Evaluates an alpha parameter.
 
@@ -46,7 +46,7 @@ def _testalpha(points: Union[list[tuple[float]], np.ndarray], alpha: float):
         return False
 
 
-def optimizealpha(points: Union[list[tuple[float]], np.ndarray],
+def optimizealpha(points: Union[List[Tuple[float]], np.ndarray],
                   max_iterations: int = 10000, lower: float = 0.,
                   upper: float = sys.float_info.max, silent: bool = False):
     """
