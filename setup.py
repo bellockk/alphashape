@@ -15,6 +15,9 @@ requirements = ['Click>=6.0',
                 'click_log>=0.3.2',
                 'shapely>=1.4.0',
                 'numpy>=1.8.0',
+                'trimesh>=3.9.8',
+                'networkx>=2.5',
+                'rtree>=0.9.7',
                 'scipy>=1.0.0']
 
 setup_requirements = [ ]

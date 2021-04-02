@@ -67,7 +67,11 @@ def alphasimplices(points):
 
     for simplex in tri.simplices:
         simplex_points = coords[simplex]
-        yield simplex, circumradius(simplex_points)
+        try:
+            yield simplex, circumradius(simplex_points)
+        except np.linalg.LinAlgError:
+            logging.warn('Singular matrix.  Likely caused by all points '
+                         'lying in an N-1 space.')
 
 
 def alphashape(points, alpha=None):
