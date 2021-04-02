@@ -124,7 +124,7 @@ def alphashape(points, alpha=None):
         alpha = optimizealpha(points)
 
     # Convert the points to a numpy array
-    if USE_GP:
+    if crs:
         coords = np.array([point.coords[0] for point in points])
     else:
         coords = np.array(points)
