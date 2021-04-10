@@ -131,7 +131,7 @@ def alphashape(points: Union[List[Tuple[float]], np.ndarray],
         alpha = optimizealpha(points)
 
     # Convert the points to a numpy array
-    if isinstance(points, geopandas.geoseries.GeoSeries):
+    if USE_GP and isinstance(points, geopandas.geoseries.GeoSeries):
         coords = np.array([point.coords[0] for point in points])
     else:
         coords = np.array(points)
