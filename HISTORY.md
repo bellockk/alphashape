@@ -1,5 +1,10 @@
 # History
 
+## 1.3.1 (2021-04-16)
+
+* Small bug fixes
+* Documentation cleanup
+
 ## 1.3.0 (2021-04-02)
 
 * Support for generating alphashapes for 3 or more dimensional input data.
