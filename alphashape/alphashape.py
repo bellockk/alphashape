@@ -4,7 +4,7 @@ Tools for working with alpha shapes.
 __all__ = ['alphashape']
 
 import itertools
-import logging
+import warnings
 from shapely.ops import unary_union, polygonize
 from shapely.geometry import MultiPoint, MultiLineString
 from scipy.spatial import Delaunay
@@ -76,8 +76,8 @@ def alphasimplices(points: Union[List[Tuple[float]], np.ndarray]) -> \
         try:
             yield simplex, circumradius(simplex_points)
         except np.linalg.LinAlgError:
-            logging.warn('Singular matrix. Likely caused by all points '
-                         'lying in an N-1 space.')
+            warnings.warn('Singular matrix. Likely caused by all points '
+                          'lying in an N-1 space.')
 
 
 def alphashape(points: Union[List[Tuple[float]], np.ndarray],
