@@ -1,6 +1,6 @@
 __all__ = ['optimizealpha']
 import sys
-import logging
+import warnings
 import shapely
 from shapely.geometry import MultiPoint
 import trimesh
@@ -86,7 +86,7 @@ def optimizealpha(points: Union[List[Tuple[float]], np.ndarray],
 
     if _testalpha(points, upper):
         if not silent:
-            logging.error('the max float value does not bound the alpha '
+            warnings.warn('the max float value does not bound the alpha '
                           'parameter solution')
         return 0.
 
@@ -106,8 +106,8 @@ def optimizealpha(points: Union[List[Tuple[float]], np.ndarray],
         counter += 1
         if counter > max_iterations:
             if not silent:
-                logging.warning('maximum allowed iterations reached while '
-                                'optimizing the alpha parameter')
+                warning.warn('maximum allowed iterations reached while '
+                             'optimizing the alpha parameter')
             lower = 0.
             break
     return lower
