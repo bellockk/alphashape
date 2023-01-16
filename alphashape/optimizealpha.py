@@ -3,6 +3,7 @@ import sys
 import logging
 import shapely
 from shapely.geometry import MultiPoint
+from packaging import version
 import trimesh
 from typing import Union, Tuple, List
 import rtree  # Needed by trimesh
@@ -37,7 +38,11 @@ def _testalpha(points: Union[List[Tuple[float]], np.ndarray], alpha: float):
     polygon = alphashape(points, alpha)
     if isinstance(polygon, shapely.geometry.polygon.Polygon):
         if not isinstance(points, MultiPoint):
-            points = MultiPoint(list(points))
+            # workaround for different versions of shapely
+            if version.parse(shapely.__version__) < version.parse('2.0.0'):
+                points = MultiPoint(list(points))
+            else:
+                points = MultiPoint(list(points)).geoms
         return all([polygon.intersects(point) for point in points])
     elif isinstance(polygon, trimesh.base.Trimesh):
         return len(polygon.faces) > 0 and all(
