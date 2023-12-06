@@ -97,7 +97,7 @@ def optimizealpha(points: Union[List[Tuple[float]], np.ndarray],
 
     # Begin the bisection loop
     counter = 0
-    while (upper - lower) > np.finfo(float).eps * 2:
+    while not np.isclose(lower, upper, atol=0.0, rtol=np.finfo(float).eps * 2):
         # Bisect the current bounds
         test_alpha = (upper + lower) * .5
 
