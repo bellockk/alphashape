@@ -111,8 +111,8 @@ def optimizealpha(points: Union[List[Tuple[float]], np.ndarray],
         counter += 1
         if counter > max_iterations:
             if not silent:
-                warning.warn('maximum allowed iterations reached while '
-                             'optimizing the alpha parameter')
+                warnings.warn('maximum allowed iterations reached while '
+                              'optimizing the alpha parameter')
             lower = 0.
             break
     return lower
