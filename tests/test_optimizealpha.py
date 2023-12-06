@@ -26,3 +26,16 @@ class TestOptimizeAlapha(unittest.TestCase):
             [(0., 0.), (0., 1.), (1., 1.), (1., 0.),
              (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)])
         assert alpha > 3. and alpha < 3.5
+
+    def test_reach_max_iterations(self):
+        """
+        Given a non-trivial set of points, a non-trivial interval of possible
+        alpha values and allowing only 2 iterations, the optimizealpha function
+        should reach max_iterations and return 0
+        """
+        with self.assertWarns(Warning):
+            alpha = optimizealpha(
+                [(0., 0.), (0., 1.), (1., 1.), (1., 0.),
+                 (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)],
+                max_iterations=2, lower=0.0, upper=1000.0)
+        self.assertEqual(alpha, 0.0)
