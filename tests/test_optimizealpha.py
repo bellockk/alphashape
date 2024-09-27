@@ -5,6 +5,7 @@
 
 
 import unittest
+import numpy as np
 
 from alphashape import optimizealpha
 
@@ -39,3 +40,25 @@ class TestOptimizeAlapha(unittest.TestCase):
                  (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)],
                 max_iterations=2, lower=0.0, upper=1000.0)
         self.assertEqual(alpha, 0.0)
+
+    def test_large_alpha(self):
+        """
+        Given a polygon for which a large alpha is optimal, the optimizealpha
+        function should find a large alpha
+        """
+        scale = 1e30
+        alpha = optimizealpha(np.array(
+            [(0., 0.), (0., 1.), (1., 1.), (1., 0.),
+             (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)]) / scale)
+        assert alpha > 3. * scale and alpha < 3.5 * scale
+
+    def test_tiny_alpha(self):
+        """
+        Given a polygon for which a tiny alpha is optimal, the optimizealpha
+        function should find a tiny alpha
+        """
+        scale = 1e-30
+        alpha = optimizealpha(np.array(
+            [(0., 0.), (0., 1.), (1., 1.), (1., 0.),
+             (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)]) / scale)
+        assert alpha > 3. * scale and alpha < 3.5 * scale
