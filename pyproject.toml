@@ -1,0 +1,118 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "alphashape"
+dynamic = ["version"]
+description = "Toolbox for generating alpha shapes."
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Kenneth E. Bellock", email = "ken@bellock.net" },
+]
+keywords = [
+    "alphashape",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "Click>=6.0",
+    "click_log>=0.3.2",
+    "networkx>=2.5",
+    "numpy>=1.8.0",
+    "rtree>=0.9.7",
+    "scipy>=1.0.0",
+    "shapely>=1.4.0",
+    "trimesh>=3.9.8",
+    "packaging"
+]
+
+[tool.pixi.dependencies]
+click = ">=6,<7"
+click-log = ">=0.3,<1"
+networkx = ">=2,<3"
+numpy = ">=1,<2"
+rtree = ">=0,<1"
+scipy = ">=1,<2"
+shapely = ">=1,<2"
+trimesh = ">=3,<4"
+packaging = "*"
+geopandas = "*"
+
+[project.scripts]
+alphashape = "alphashape.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/bellockk/alphashape"
+
+[tool.hatch.version]
+path = "alphashape/_version.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/alphashape",
+]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+alphashape = { path = ".", editable = true }
+
+[tool.pixi.feature.test.dependencies]
+coverage = ">=7,<8"
+nose2 = ">=0.9,<1"
+robotframework = ">=7,<8"
+
+[tool.pixi.feature.static-analysis.dependencies]
+flake8 = ">=7,<8"
+flake8-pyproject = ">=1,<2"
+mypy = ">=1,<2"
+pydocstyle = ">=6,<7"
+pylint = ">=3,<4"
+types-shapely = "*"
+types-geopandas = "*"
+
+[tool.pixi.environments]
+default = {features = [], solve-group = "default"}
+test = {features = ["test"], solve-group = "default"}
+static-analysis = {features = ["static-analysis"], solve-group = "default"}
+
+[tool.pixi.tasks]
+test = [
+    {task = "unit"},
+    {task = "acceptance"}]
+static-analysis = [
+    {task = "mypy"},
+    {task = "pylint"},
+    {task = "flake8"},
+    {task = "pydocstyle"}]
+
+[tool.pixi.feature.static-analysis.tasks]
+mypy = "mypy alphashape"
+pylint = "pylint alphashape"
+flake8 = "flake8"
+pydocstyle = "pydocstyle -e"
+
+[tool.pixi.feature.test.tasks]
+unit = """
+    nose2 \
+    --with-coverage \
+    --coverage \
+    alphashape \
+    --coverage-report=term-missing"""
+acceptance = """
+    robot"""

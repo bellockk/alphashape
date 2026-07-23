@@ -107,3 +107,6 @@ ENV/
 # Documentation Temp folders
 /docs/auto_examples
 /docs/gen_modules
+# pixi environments
+.pixi/*
+!.pixi/config.toml
